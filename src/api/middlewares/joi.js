@@ -35,7 +35,7 @@ const joiMiddleWares = (joiSchemas) => {
       next()
     }).catch(error => {
       next({
-        status: 400,
+        code: 400,
         message: error.error.message
       })
     })

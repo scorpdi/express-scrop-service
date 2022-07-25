@@ -6,14 +6,14 @@ const cookieParser = require('cookie-parser');
 const logger = require('./logger');
 
 module.exports = ({ app }) => {
-  
+
   // 设置
   app.use(express.json());
   app.use(bodyParser.urlencoded({ extended: false }));
   app.use(cookieParser());
 
   // 静态资源目录
-  app.use(express.static(path.join(__dirname, '../public'))); 
+  app.use(express.static(path.join(__dirname, '../public')));
 
   // 接口路由
   app.use('/api', apiRoutes());
@@ -21,18 +21,23 @@ module.exports = ({ app }) => {
   // jade 模板页面 PS:暂时保留
   app.set('views', path.join(__dirname, '../views'));
   app.set('view engine', 'jade');
-  app.get('/',function(req,res){
+  app.get('/', function (req, res) {
     res.render('index', { title: 'Z_di' });
   })
 
+  // jwt 安全验证
+  // app.set((req, res, next) => {
+
+  // })
+
   // 401 未授权
   // app.use((err, req, res, next) => {
-  //   if (err.name === 'UnauthorizedError') {
+  //   if (err.name === 'Unauthorized') {
   //     return res
   //       .status(err.status)
   //       .json({
   //         code: err.status || 500,
-  //         message: err.message
+  //         msg: err.msg || err.message
   //       })
   //       .end();
   //   }
@@ -43,8 +48,8 @@ module.exports = ({ app }) => {
   app.use((err, req, res, next) => {
     logger.error(err)
     res.status(200).json({
-      code: err.status || 500,
-      message: err.message
+      code: err.code || 500,
+      msg: err.msg || err.message
     });
   });
 

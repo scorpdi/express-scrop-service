@@ -23,13 +23,40 @@ module.exports = (app) => {
         ...RESULT.SUCCESS,
       })
     } catch (error) {
+      if(error.errors){
+        return next({
+          ...RESULT.ARG_ERROR,
+          msg:error.errors[0].message
+        })
+      }
       Logger.error('🔥 error: %o', error);
       return next(error);
     }
   });
 
   // 签名登录
-  route.get('/signin', function (req, res, next) {
-    res.status(200).send({ a: 1 })
+  route.post('/signin', joiMiddleWares({
+    [Segments.BODY]: Joi.object({
+      userName: Joi.string().required(), 
+      passWord: Joi.string().required(),
+    })
+  }), async function (req, res, next) {
+    const authService = new AuthService()
+    try {
+      const result = await authService.Signin(req.body)
+      res.status(200).json({
+        data: result,
+        ...RESULT.SUCCESS,
+      })
+    } catch (error) {
+      if(error.errors){
+        return next({
+          ...RESULT.ARG_ERROR,
+          msg:error.errors[0].message
+        })
+      }
+      Logger.error('🔥 error: %o', error);
+      return next(error);
+    }
   });
 }

@@ -14,21 +14,35 @@ class AuthService extends Basics {
   async Signup(userInfo) {
     this.logger.info('AuthService Signup start!')
     const { userName } = userInfo
-    console.log(this.token.sign)
-    const token = this.token.sign({ userName })
+    // const token = this.token.sign({ userName })
     try {
-      let res = await UserModel.create({ ...userInfo,token })
-      this.logger.info('Signup Success!')
+      let res = await UserModel.create({ ...userInfo })
+      this.logger.info(`${userName} Signup Success!`)
       return res
     } catch (error) {
       this.logger.info('AuthService Signup Error!')
-      this.logger.error(error)
       throw error
     }
   }
 
-  Signin() {
-
+  async Signin(inputInfo) {
+    this.logger.info('AuthService Signin start!')
+    const { userName, passWord: inputPassWord } = inputInfo
+    try {
+      let { userId, passWord } = await UserModel.findOne({ where: { userName } })
+      this.logger.info(`${userName} Signin Success!`)
+      if (inputPassWord === passWord) {
+        return {
+          token: this.token.sign({ userName }),
+          userName,
+          userId
+        }
+      }
+    } catch (error) {
+      this.logger.info('AuthService Signin Error!')
+      this.logger.error(error)
+      throw error
+    }
   }
 
 }
