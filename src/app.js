@@ -12,6 +12,7 @@ async function start() {
     Logger.info(err)
     process.exit(1);
   })
+  
 }
 
 
