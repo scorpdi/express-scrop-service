@@ -13,6 +13,7 @@ module.exports = (app) => {
       userName: Joi.string().required(),
       passWord: Joi.string().required(),
       openid: Joi.string(),
+      nikeName: Joi.string()
     })
   }), async (req, res, next) => {
     const authService = new AuthService()

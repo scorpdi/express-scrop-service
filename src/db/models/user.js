@@ -21,9 +21,16 @@ module.exports = (sequelize, DataTypes) => {
       defaultValue: DataTypes.UUIDV1,
       unique: true // 唯一索引
     },
+    nikeName: DataTypes.STRING,
     token: DataTypes.STRING,
     openid: DataTypes.STRING
   }, {
+    hooks:{
+      afterCreate(instance, options){
+        debugger
+        console.log('-----------beforeUpdate')
+      }
+    },
     sequelize,
     modelName: 'User',
   });

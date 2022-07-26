@@ -38,6 +38,7 @@ mysql
 npx sequelize-cli model:generate --name User --attributes userName:string,passWord:string,userId:uuid,token:string,openid:string
 # 运行迁移
  npx sequelize-cli db:migrate
+ export NODE_ENV=development && sequelize-cli db:migrate:undo 
 # 撤回迁移
  sequelize-cli db:migrate:undo
 

@@ -23,6 +23,9 @@ module.exports = {
       openid: {
         type: Sequelize.STRING
       },
+      nikeName:{
+        type: Sequelize.STRING
+      },
       createdAt: {
         allowNull: false,
         type: Sequelize.DATE

@@ -16,11 +16,11 @@ const UserModel = sequelize.models.User
  */
 const userInfo = async (req, res, next) => {
   if (!req.token) return next({ code: 400 })
-  const { userName } = req.token
+  const { userName,id } = req.token
   try {
     const result = await UserModel.findOne({
       where: {
-        userName
+        id
       }
     });
     result.passWord = ''
