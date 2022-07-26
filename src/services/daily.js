@@ -1,4 +1,4 @@
-const Basics = require('../loaders/Basics')
+const Basics = require('../loaders/basics')
 const config = require('../config/index')
 const { url, secretkey } = config.api.amap
 /**

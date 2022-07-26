@@ -5,7 +5,7 @@
  * @author zhangdi 
  * @date 2022-07-21 10:40:14 
 **/
-const Basics = require('../loaders/Basics')
+const Basics = require('../loaders/basics')
 const db = require('../db/models/index')
 const sequelize = db.sequelize
 const UserModel = sequelize.models.User
