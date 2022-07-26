@@ -13,7 +13,11 @@ if (envFound.error) {
 module.exports = {
   port: parseInt(process.env.PORT, 10),
   api: {
-    prefix: process.env.API_PREFIX
+    prefix: process.env.API_PREFIX,
+    amap:{ // 高德开发api相关
+      url:'https://restapi.amap.com/v3',
+      secretkey:'bc534d312da7aa8f2e5da8f5b7b4cd42'
+    }
   },
   minprogram: {
     AppID: process.env.MINPROGRAM_APP_ID,
