@@ -29,15 +29,20 @@ class AuthService extends Basics {
     this.logger.info('AuthService Signin start!')
     const { userName, passWord: inputPassWord } = inputInfo
     try {
-      let { userId, passWord, id } = await UserModel.findOne({ where: { userName } })
-      this.logger.info(`${userName} Signin Success!`)
-      if (inputPassWord === passWord) {
-        return {
-          token: this.token.sign({ userName, id }),
-          userName,
-          userId,
-          id
+      let user = await UserModel.findOne({ where: { userName } })
+      if (user) {
+        const { userId, passWord, id } = user
+        this.logger.info(`${userName} Signin Success!`)
+        if (inputPassWord === passWord) {
+          return {
+            token: this.token.sign({ userName, id }),
+            userName,
+            userId,
+            id
+          }
         }
+      }else{
+        throw new Error('没有这个用户')
       }
     } catch (error) {
       this.logger.info('AuthService Signin Error!')
